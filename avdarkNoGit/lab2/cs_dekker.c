@@ -42,6 +42,7 @@ impl_enter_critical(int thread)
         /* TASK: Implement entry code for Dekker's algorithm here */
 		
 		flag[thread] = 1;
+		MFENCE();
 		while(flag[!thread]) {
 			if (turn != thread) {
 				flag[thread] = 0;
@@ -49,6 +50,7 @@ impl_enter_critical(int thread)
 				flag[thread] = 1;
 			}	
 		}
+
 }
 
 /**
