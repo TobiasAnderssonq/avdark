@@ -28,7 +28,7 @@ increase(int thread, int iterations, volatile int *data)
 			do{
 				oldVal=(int)*data;
 
-			}while(asm_cmpxchg_int32((int32_t*)data, oldVal, oldVal+1) != oldVal)
+			}while(asm_cmpxchg_int32((int32_t*)data, oldVal, oldVal+1) != oldVal);
 			
 		}
 		
@@ -47,7 +47,7 @@ decrease(int thread, int iterations, volatile int *data)
 			do{
 				oldVal=(int)*data;
 
-			}while(asm_cmpxchg_int32((int32_t*)data, oldVal, oldVal-1) != oldVal)
+			}while(asm_cmpxchg_int32((int32_t*)data, oldVal, oldVal-1) != oldVal);
 			
 		}
 		
@@ -69,7 +69,7 @@ increase_atomic(int thread, int iterations, volatile int *data)
 			}*/
 			do{
 				oldVal=(int)*data;
-			}while(asm_atomic_cmpxchg_int32((int32_t*)data, oldVal, oldVal+1) != oldVal)
+			}while(asm_atomic_cmpxchg_int32((int32_t*)data, oldVal, oldVal+1) != oldVal);
 			
 			
 		}
@@ -93,7 +93,7 @@ decrease_atomic(int thread, int iterations, volatile int *data)
 			do{
 				oldVal=(int)*data;
 
-			}while(asm_atomic_cmpxchg_int32((int32_t*)data, oldVal, oldVal-1) != oldVal)
+			}while(asm_atomic_cmpxchg_int32((int32_t*)data, oldVal, oldVal-1) != oldVal);
 			
 		}
 }
