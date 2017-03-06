@@ -63,7 +63,7 @@ static int num_threads;
 static void
 lh_acquire(int ** volatile l, int ** volatile i, volatile int ** volatile p)
 {
-		printf("%d", 123);
+		
         assert (**i == 0);
         assert (*i == *p);
         /* BONUS TASK: Implement the acquire part of the CLH locking
