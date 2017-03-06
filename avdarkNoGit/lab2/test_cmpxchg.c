@@ -63,10 +63,6 @@ increase_atomic(int thread, int iterations, volatile int *data)
          */
 		int oldVal;
 		for(int i = 0; i < iterations; i++) {
-			/*int32_t conTurn = (int32_t)turn;
-			if(asm_atomic_cmpxchg_int32(&conTurn, !thread, thread) == !thread){
-				asm_atomic_inc_int32((int32_t*)data);
-			}*/
 			do{
 				oldVal=(int)*data;
 			}while(asm_atomic_cmpxchg_int32((int32_t*)data, oldVal, oldVal+1) != oldVal);
@@ -81,12 +77,7 @@ decrease_atomic(int thread, int iterations, volatile int *data)
         /* TASK: Implement a loop that decrements *data by 1 using
          * atomic compare and exchange instructions. See lab2_asm.h.
          */
-		/*for(int i = 0; i < iterations; i++) {
-			int32_t conTurn = (int32_t)turn;
-			if(asm_atomic_cmpxchg_int32(&conTurn, !thread, thread) == !thread){
-				asm_atomic_dec_int32((int32_t*)data);
-			}
-		}*/
+		
 		int oldVal;
 		for(int i = 0; i < iterations; i++) {
 			

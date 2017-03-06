@@ -63,18 +63,14 @@ static int num_threads;
 static void
 lh_acquire(int ** volatile l, int ** volatile i, volatile int ** volatile p)
 {
-		
+		 //asm_atomic_xchg_voidp(void **a, void *b)
         assert (**i == 0);
         assert (*i == *p);
         /* BONUS TASK: Implement the acquire part of the CLH locking
          * algorithm as described in the lecture notes. */
-		**i = 1;
-		
-		int * volatile tmp = *l;
-		*l = *i;
-		*i=tmp;
-		printf("%p", l);
-		while(**p != 0) {}
+		**i = 1; //Init to busy
+		*p = asm_atomic_xchg_voidp((void **) l,(void *) *p); //Set l to p and p to l's old value  
+		while(**p != 0) {} //Spin until previous thread is finished
 		
 }
 
