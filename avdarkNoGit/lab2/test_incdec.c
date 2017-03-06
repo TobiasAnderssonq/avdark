@@ -24,8 +24,7 @@ increase(int thread, int iterations, volatile int *data)
 		 
 		for(int i = 0; i < iterations; i++) {
 			if(thread == 0) {
-				int32_t* x = (int32_t*)data;
-				asm_inc_int32(x);
+				asm_inc_int32((int32_t*)data);
 			} 
 		}
 }
@@ -39,8 +38,7 @@ decrease(int thread, int iterations, volatile int *data)
 		 
 		for(int i = 0; i < iterations; i++) {
 			if(thread == 1) {
-				int32_t* x = (int32_t*)data;
-				asm_dec_int32(x);
+				asm_dec_int32((int32_t*)data);
 			} 
 		}
 }
@@ -55,8 +53,7 @@ increase_atomic(int thread, int iterations, volatile int *data)
 		 
 		for(int i = 0; i < iterations; i++) {
 			if(thread == 0) {
-				int32_t* x = (int32_t*)data;
-				asm_atomic_inc_int32(x);
+				asm_atomic_inc_int32((int32_t*)data);
 			} 
 		}
 }
@@ -70,8 +67,7 @@ decrease_atomic(int thread, int iterations, volatile int *data)
 		 
 		for(int i = 0; i < iterations; i++) {
 			if(thread == 1) {
-				int32_t* x = (int32_t*)data;
-				asm_atomic_dec_int32(x);
+				asm_atomic_dec_int32((int32_t*)data);
 			} 
 		}
 }

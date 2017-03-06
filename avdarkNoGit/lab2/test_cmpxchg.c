@@ -22,13 +22,15 @@ increase(int thread, int iterations, volatile int *data)
          * non-atomic compare and exchange instructions. See lab2_asm.h.
          */
 		
-		
+		int oldVal;
 		for(int i = 0; i < iterations; i++) {
-			int32_t conTurn = (int32_t)turn;
-			if(asm_cmpxchg_int32(&conTurn, !thread, thread) == 0){
-				int32_t* conData = (int32_t*)data;
-				asm_inc_int32(conData);
-			}
+			oldVal=(int)*data;
+			asm_cmpxchg_int32((int32_t*)data, oldVal, oldVal + 1);
+
+			//int32_t conTurn = (int32_t)turn;
+			//if(asm_cmpxchg_int32(&conTurn, !thread, thread) == !thread){
+			//	asm_inc_int32((int32_t*)data);
+			//}
 		}
 		
 		
@@ -40,13 +42,16 @@ decrease(int thread, int iterations, volatile int *data)
         /* TASK: Implement a loop that decrements *data by 1 using
          * non-atomic compare and exchange instructions. See lab2_asm.h.
          */
-		
+		int oldVal;
 		for(int i = 0; i < iterations; i++) {
+			oldVal=(int)*data;
+			asm_cmpxchg_int32((int32_t*)data, oldVal, oldVal - 1);		
+		/*			
 			int32_t conTurn = (int32_t)turn;
-			if(asm_cmpxchg_int32(&conTurn, !thread, thread) == 0){
-				int32_t* conData = (int32_t*)data;
-				asm_dec_int32(conData);
+			if(asm_cmpxchg_int32(&conTurn, !thread, thread) == !thread){
+				asm_dec_int32((int32_t*)data);
 			}
+			*/
 		}
 		
 }
@@ -58,12 +63,15 @@ increase_atomic(int thread, int iterations, volatile int *data)
         /* TASK: Implement a loop that increments *data by 1 using
          * atomic compare and exchange instructions. See lab2_asm.h.
          */
+		int oldVal;
 		for(int i = 0; i < iterations; i++) {
-			int32_t conTurn = (int32_t)turn;
-			if(asm_atomic_cmpxchg_int32(&conTurn, !thread, thread) == 0){
-				int32_t* conData = (int32_t*)data;
-				asm_atomic_inc_int32(conData);
-			}
+			/*int32_t conTurn = (int32_t)turn;
+			if(asm_atomic_cmpxchg_int32(&conTurn, !thread, thread) == !thread){
+				asm_atomic_inc_int32((int32_t*)data);
+			}*/
+			oldVal=(int)*data;
+			asm_atomic_cmpxchg_int32((int32_t*)data, oldVal, oldVal);
+			
 		}
 }
 
@@ -75,9 +83,8 @@ decrease_atomic(int thread, int iterations, volatile int *data)
          */
 		for(int i = 0; i < iterations; i++) {
 			int32_t conTurn = (int32_t)turn;
-			if(asm_atomic_cmpxchg_int32(&conTurn, !thread, thread) == 0){
-				int32_t* conData = (int32_t*)data;
-				asm_atomic_dec_int32(conData);
+			if(asm_atomic_cmpxchg_int32(&conTurn, !thread, thread) == !thread){
+				asm_atomic_dec_int32((int32_t*)data);
 			}
 		}
 
